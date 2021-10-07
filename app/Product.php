@@ -9,6 +9,8 @@ class Product extends Model
 {
     use Sluggable;
 
+    protected $table = 'products';
+
     protected $fillable = [
         'name', 'description', 'price', 'status'
     ];
