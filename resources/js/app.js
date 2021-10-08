@@ -7,6 +7,18 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css'
+Vue.use(Vuetify);
+
+export default new Vuetify({
+  theme: { dark: true },
+  icons: {
+    iconfont: 'md', // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4' || 'faSvg'
+  },
+})
 
 /**
  * The following block of code may be used to automatically register your
@@ -30,4 +42,5 @@ Vue.component('cmp-product', require('./components/products/CmpProduct.vue').def
 
 const app = new Vue({
     el: '#app',
+    vuetify: new Vuetify()
 });
