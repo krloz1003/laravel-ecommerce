@@ -70,7 +70,7 @@
     			</v-tooltip>
 
 			</v-app-bar>
-		<v-main>
+		<v-main>			
 			@yield('content')
 		</v-main>
 	</v-app>

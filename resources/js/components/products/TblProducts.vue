@@ -1,4 +1,5 @@
 <template>
+<v-row>
 	<v-data-table
 		:headers="headers"
 		:items="rows"
@@ -31,11 +32,26 @@
 		</template>
 
 	</v-data-table>
+	<cmp-confirmation />
+	<cmp-snackbars />
+</v-row>
 </template>
 <script>
-  export default {
+import CmpConfirmation from './../CmpConfirmation.vue'
+import CmpSnackbars from './../CmpSnackbars.vue'
+
+export default {
 	mounted() {			
 		this.getProducts();
+		this.$root.$on('dialogConfirmation',(res) => {
+			if(res.type == "UPDATE") this.update(res.data);
+			if(res.type == "DELETE") this.destroy(res.data);
+
+		});
+	},
+	components: {	
+		CmpConfirmation,
+		CmpSnackbars
 	},
 	props: {
 		search: {
@@ -72,14 +88,30 @@
 			return (row)? 'green' : 'red';
 		},
 		statusItem(row){
-			console.log('Status', row)
+			let dialog = "¿Are you sure to updated the status ?"
+			this.$emit('dialogStatus', {type: 'UPDATE', dialog: dialog, data: { id: row.id, params: { status: !row.status }}});
 		},
 		editItem(row){
 			console.log('Edit', row)
 		},
 		deleteItem(row){
-			console.log('Delete', row)
+			let dialog = "¿Are you sure to deleted the product?"
+			this.$emit('dialogStatus', {type: 'DELETE', dialog: dialog, data: { id: row.id }});
+		},
+		update(row){
+			axios.put( `${Laravel.baseUrl}/product/${row.id}`, row.params)
+			.then(response => {
+				this.getProducts();
+				this.$emit('snackbarShow', response);
+			});
+		},
+		destroy(row){
+			axios.delete( `${Laravel.baseUrl}/product/${row.id}`)
+			.then(response => {
+				this.getProducts();
+				this.$emit('snackbarShow', response);
+			});
 		}
 	}
-  }
+}
 </script>

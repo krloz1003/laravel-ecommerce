@@ -1,6 +1,9 @@
 <template>
 <v-row dense>
 	<v-col cols="12">
+		<form-product />
+	</v-col>
+	<v-col cols="12">
   		<v-card>
 			<v-card-title>
 				Products
@@ -12,7 +15,7 @@
 					single-line
 					hide-details
 				></v-text-field>
-			</v-card-title>		
+			</v-card-title>
 			<tbl-products :search="search"></tbl-products>
 		</v-card>
 	</v-col>
@@ -20,12 +23,14 @@
 </template>
 <script>
 	import TblProducts from './TblProducts.vue'
+	import FormProduct from './FormProduct.vue'
 	export default {
 		mounted() {			
 			
 		},
 		components: {
 			TblProducts,
+			FormProduct
 		},
 		data: () => ({
 			loading: false,

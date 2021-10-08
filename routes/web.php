@@ -19,5 +19,7 @@ Auth::routes();
 
 
 Route::get('/products', 'ProductController@index');
+Route::put('/product/{id}', 'ProductController@update');
+Route::delete('/product/{id}', 'ProductController@destroy');
 
 
