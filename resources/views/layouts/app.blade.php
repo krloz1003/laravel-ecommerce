@@ -26,15 +26,16 @@
 </head>
 <body>
 	<v-app id="app">
-
 			<v-app-bar app>
-				<v-app-bar-nav-icon></v-app-bar-nav-icon>
+				<v-btn icon href="{{ url('') }}" >
+					<v-icon>storefront</v-icon>
+				</v-btn>
 				<v-toolbar-title>{{ env('APP_NAME') }}</v-toolbar-title>
 				<v-spacer></v-spacer>
     			
     			<v-tooltip bottom>
 	      			<template v-slot:activator="{ on, attrs }">
-						<v-btn icon v-bind="attrs" v-on="on">
+						<v-btn icon v-bind="attrs" v-on="on" href="{{ url('products') }}" >
 							<v-icon>shopping_bag</v-icon>
 						</v-btn>	      				
 	      			</template>
