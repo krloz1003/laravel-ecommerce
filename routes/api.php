@@ -25,3 +25,7 @@ Route::post('/product', 'ProductController@store');
 Route::delete('/product/{id}', 'ProductController@destroy');
 
 Route::get('/users', 'UserController@getData');
+Route::get('/user/{id}', 'UserController@show');
+Route::put('/user/{id}', 'UserController@update');
+Route::post('/user', 'UserController@store');
+Route::delete('/user/{id}', 'UserController@destroy');
