@@ -34,6 +34,8 @@ export default new Vuetify({
 
 Vue.component('cmp-product', require('./components/products/CmpProduct.vue').default);
 Vue.component('list-products', require('./components/products/ListProducts.vue').default);
+Vue.component('cmp-user', require('./components/users/CmpUser.vue').default);
+
 Vue.component('cmp-snackbars', require('./components/CmpSnackbars.vue').default);
 
 

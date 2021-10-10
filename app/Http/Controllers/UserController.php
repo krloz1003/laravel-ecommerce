@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
+use App\User;
 
-class ProductController extends Controller
+class UserController extends Controller
 {
     public function index(){
-        return view('products.index');
+        return view('users.index');
     }
-    
+
     public function getData(){
-        $rows = Product::orderByDesc('id')->get();
+        $rows = User::orderByDesc('id')->get();
 
         return response()->json($rows);
     }
@@ -23,14 +23,14 @@ class ProductController extends Controller
 
         \DB::beginTransaction();
         try {
-            $row = new Product;
-            $row->name          = $request->name;
-            $row->description   = $request->description;
-            $row->price         = $request->price;
+            $row = new User;
+            $row->name  = $request->name;
+            $row->email = $request->email;
+            $row->password = \Hash::make($request->password);
             $row->save();
             
             \DB::commit();
-            return response()->json(['message' => "The data was stored correctly", 'row' => $row]);
+            return response()->json(['message' => "The data was stored correctly"]);
             
         } catch (\Exception $e) {
               \DB::rollback();
@@ -41,10 +41,8 @@ class ProductController extends Controller
         }
     }
 
-    public function show($slug){
-        $row = Product::select('id','name','description', 'price')
-                        ->where('slug',$slug)
-                        ->first();
+    public function show($id){
+        $row = User::select('id','name','email')->find($id);
 
         return response()->json($row);
     }
@@ -54,24 +52,23 @@ class ProductController extends Controller
         //$validator = \Validator::make($request->all(), $this->rulesValidation($request));
 
         $input = $request->all();
-        $row = Product::find($id);
+        $row = User::find($id);
         $row->update($input);
         
         return response()->json(['message' => "The data was updated successfully"]);
     }
 
     public function destroy($id){        
-        Product::find($id)->delete();
+        User::find($id)->delete();
         
         return response()->json(['message' => "The data was deleted successfully"]);
-    }
+    }        
 
     private function rulesValidation($request){
         return [
-            'name'          => 'required|min:7|max:50',
-            'description'   => 'required|min:10|max:250',
-            'price'         => 'required|numeric|between:0,999.99',
-
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
 }

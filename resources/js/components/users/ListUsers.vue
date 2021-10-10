@@ -47,12 +47,9 @@
 </v-row>
 </template>
 <script>
-	import Productservice from "../services/Productservice";
-
 	export default {
-		name: 'list-products',
 		mounted() {			
-			this.getData();
+			this.getProducts();
 		},
 		data: () => ({
 			loading: false,
@@ -64,16 +61,11 @@
 				this.loading = true
 				setTimeout(() => (this.loading = false), 2000)
 			},
-			getData(){
-				Productservice.getall()
-				.then(res => {
-					console.log(res);
-				});
-
-				/*axios.get( `${Laravel.baseUrl}/api/products`)
+			getProducts(){
+				axios.get( `${Laravel.baseUrl}/api/products`)
 				.then(response => {
 					this.rows = response.data;
-				});*/
+				});
 			},
 		}
 	}

@@ -24,5 +24,10 @@ Route::put('/product/{id}', 'ProductController@update');
 Route::get('/product/{id}', 'ProductController@show');
 Route::delete('/product/{id}', 'ProductController@destroy');
 
+Route::get('/users', 'UserController@index');
+Route::post('/user', 'UserController@store');
+Route::put('/user/{id}', 'UserController@update');
+Route::get('/user/{id}', 'UserController@show');
+Route::delete('/user/{id}', 'UserController@destroy');
 
 
