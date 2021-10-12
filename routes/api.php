@@ -18,23 +18,30 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
-Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('signup', 'AuthController@signUp');
+Route::group([], function () {
+    Route::post('/auth/login', 'AuthController@login');
+    Route::post('/auth/signup', 'AuthController@signUp');
+
+    Route::get('/products', 'ProductController@getData');
+    Route::get('/product/{slug}', 'ProductController@show');
+
     Route::group(['middleware' => 'auth:api'], function() {
-        Route::get('logout', 'AuthController@logout');
+        Route::get('/auth/logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+
+        Route::put('/product/{id}', 'ProductController@update');
+        Route::post('/product', 'ProductController@store');
+        Route::delete('/product/{id}', 'ProductController@destroy');
+
+        Route::get('/users', 'UserController@getData');
+        Route::get('/user/{id}', 'UserController@show');
+        Route::put('/user/{id}', 'UserController@update');
+        Route::post('/user', 'UserController@store');
+        Route::delete('/user/{id}', 'UserController@destroy');   
+
     });
 });
 
-Route::get('/products', 'ProductController@getData');
-Route::get('/product/{slug}', 'ProductController@show');
-Route::put('/product/{id}', 'ProductController@update');
-Route::post('/product', 'ProductController@store');
-Route::delete('/product/{id}', 'ProductController@destroy');
 
-Route::get('/users', 'UserController@getData');
-Route::get('/user/{id}', 'UserController@show');
-Route::put('/user/{id}', 'UserController@update');
-Route::post('/user', 'UserController@store');
-Route::delete('/user/{id}', 'UserController@destroy');
+
+
