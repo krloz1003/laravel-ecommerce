@@ -16,7 +16,7 @@
 
 1. Clone frontend project: <code>git clone https://github.com/krloz1003/ecommerce-frontend.git</code>
 2. Enter the project folder: <code>cd ecommerce-frontend</code>
-3. levantar el servicio: <code>npm run serve</code>
+3. Activate the service: <code>npm run serve</code>
 4. Enter in the browser to the site: http://localhost:8080
 
 
