@@ -8,8 +8,8 @@
 3. Create a tests databases and set up the  .env file of the project. 
 4. Run the <code>composer update command</code>
 5. Generarate <code>php artisan key:generate key</code>
-6. Run <code>php artisan migrate:fresh --seed migrations</code>
-7. Run <code>php artisan passport:install</code>
+6. Run migrations <code>php artisan migrate:fresh --seed</code>
+7. Run passport <code>php artisan passport:install</code>
 8. Activate the service: <code>php artisan serve</code>  
 
 #### FrontEnd
