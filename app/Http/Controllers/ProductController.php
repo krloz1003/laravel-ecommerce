@@ -12,7 +12,7 @@ class ProductController extends Controller
     }
     
     public function getData(){
-        $rows = Product::orderByDesc('id')->get();
+        $rows = Product::with('media')->orderByDesc('id')->get();
 
         return response()->json($rows);
     }
@@ -21,6 +21,7 @@ class ProductController extends Controller
         
         $request->validate($this->rulesValidation($request));
 
+
         \DB::beginTransaction();
         try {
             $row = new Product;
@@ -28,6 +29,10 @@ class ProductController extends Controller
             $row->description   = $request->description;
             $row->price         = $request->price;
             $row->save();
+
+            if($request->hasFile('picture') && $request->file('picture')->isValid()){
+                $row->addMediaFromRequest('picture')->toMediaCollection('picture');
+            }
             
             \DB::commit();
             return response()->json(['message' => "The data was stored correctly", 'row' => $row]);
@@ -36,13 +41,14 @@ class ProductController extends Controller
               \DB::rollback();
               return response()->json([
                   "errors" => ['exception' =>[$e->getMessage()]],
-                  "message" => "Error interno, contacte al administrador."
+                  "message" => "Internal error, contact the administrator"
               ],500);
         }
     }
 
     public function show($slug){
         $row = Product::select('id','name','description', 'price')
+                        ->with('media')
                         ->where('slug',$slug)
                         ->first();
 

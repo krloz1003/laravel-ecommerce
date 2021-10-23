@@ -36,7 +36,7 @@ class UserController extends Controller
               \DB::rollback();
               return response()->json([
                   "errors" => ['exception' =>[$e->getMessage()]],
-                  "message" => "Error interno, contacte al administrador."
+                  "message" => "Internal error, contact the administrator"
               ],500);
         }
     }
